@@ -15,4 +15,5 @@ public record TodoList(@Id
                        User user,
                        @OneToMany(mappedBy = "todoList", cascade = CascadeType.ALL, orphanRemoval = true)
                        List<Task> tasks) {
+
 }
