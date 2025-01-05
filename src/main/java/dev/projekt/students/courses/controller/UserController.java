@@ -31,7 +31,7 @@ public class UserController {
 //        return ResponseEntity.ok("Hello from admin only url");
 //    }
 
-
+    //ToDo przenieś mapowanie do seriwsu
     @GetMapping("/self")
     public ResponseEntity<UserDTO> authenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -57,7 +57,7 @@ public class UserController {
                         user.getUsername(),
                         user.getFirstName(),
                         user.getLastName(),
-                        user.getRole() 
+                        user.getRole()
                 ))
                 .collect(Collectors.toList());
 
