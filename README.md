@@ -46,9 +46,53 @@ http://localhost:8080/todo/create
 }
 ```
 
-### Wyswietlanie swoich list
+### Wyswietlanie wszystkich swoich list + tasków
 ```python
 {
 http://localhost:8080/todo/all
+}
+```
+
+### Wyswietlenie konkretnej listy z taskami
+
+
+```python
+{
+http://localhost:8080/todo/{id}
+}
+```
+
+### Edytowanie listy 
+```python
+{
+http://localhost:8080/todo/{id}/edit
+}
+```
+
+```bash
+{
+    "description": "Nowa nazwa",
+}
+```
+
+### Usuwanie listy i wszystkich tasków
+```python
+{
+http://localhost:8080/todo/{id}/delete
+}
+```
+
+## Task
+
+### Tworzenie taska
+```python
+{
+http://localhost:8080/task/todo/{id listy todo}
+}
+```
+
+```bash
+{
+    "description": "Nowy task",
 }
 ```
