@@ -55,18 +55,7 @@ public class ToDoController {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        ToDo toDo = toDoService.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ToDo not found"));
-
-        if (!toDo.getUser().equals(user)) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You can only view your own ToDo lists");
-        }
-
-        List<TaskDTO> taskDTOs = toDo.getTasks().stream()
-                .map(task -> new TaskDTO(task.getId(), task.getDescription(), task.isCompleted()))
-                .collect(Collectors.toList());
-
-        ToDoDTO toDoDTO = new ToDoDTO(toDo.getId(), toDo.getTitle(), taskDTOs);
+        ToDoDTO toDoDTO = toDoService.getToDoById(id, user);
 
         return ResponseEntity.ok(toDoDTO);
     }

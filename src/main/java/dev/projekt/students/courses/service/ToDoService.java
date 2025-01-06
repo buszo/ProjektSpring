@@ -6,7 +6,9 @@ import dev.projekt.students.courses.model.ToDo;
 import dev.projekt.students.courses.model.User;
 import dev.projekt.students.courses.repository.ToDoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,14 +38,19 @@ public class ToDoService {
                 .collect(Collectors.toList());
     }
 
-    public ToDoDTO getToDoById(Integer id) {
+    public ToDoDTO getToDoById(Integer id, User user) {
         ToDo toDo = toDoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("ToDo not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ToDo not found"));
+
+        if (!toDo.getUser().equals(user)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You can only view your own ToDo lists");
+        }
 
         List<TaskDTO> taskDTOs = toDo.getTasks().stream()
                 .map(task -> new TaskDTO(task.getId(), task.getDescription(), task.isCompleted()))
                 .collect(Collectors.toList());
 
+        // Mapowanie ToDo do ToDoDTO
         return new ToDoDTO(toDo.getId(), toDo.getTitle(), taskDTOs);
     }
 

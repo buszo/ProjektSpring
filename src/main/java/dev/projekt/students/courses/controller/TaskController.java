@@ -38,19 +38,7 @@ public class TaskController
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        ToDo toDo = toDoService.findById(todoId)
-                .orElseThrow(() -> new RuntimeException("ToDo not found"));
-
-        if (!toDo.getUser().equals(user)) {
-            throw new RuntimeException("You are not authorized to modify this ToDo");
-        }
-
-        Task task = new Task();
-        task.setDescription(taskDTO.getDescription());
-        task.setCompleted(false);
-        task.setToDo(toDo);
-
-        taskService.save(task);
+        taskService.addTaskToToDo(todoId, taskDTO, user);
 
         return ResponseEntity.status(201).body("Task added successfully");
     }
