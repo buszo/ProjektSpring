@@ -21,7 +21,7 @@ public class ToDo {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "toDo", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "toDo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Task> tasks;
 
     public Integer getId() {

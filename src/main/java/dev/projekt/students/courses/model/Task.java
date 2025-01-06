@@ -2,6 +2,8 @@ package dev.projekt.students.courses.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "tasks")
 public class Task {
@@ -12,6 +14,28 @@ public class Task {
 
     @Column(name = "description")
     private String description;
+
+    @Column(name = "completed")
+    private boolean completed;
+
+    @Column(name = "completed_time")
+    private LocalDateTime completed_time;
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
+    public LocalDateTime getCompleted_time() {
+        return completed_time;
+    }
+
+    public void setCompleted_time(LocalDateTime completed_time) {
+        this.completed_time = completed_time;
+    }
 
     @ManyToOne
     @JoinColumn(name = "todo_id")
