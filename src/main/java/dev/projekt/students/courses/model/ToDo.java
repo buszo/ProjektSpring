@@ -1,7 +1,9 @@
 package dev.projekt.students.courses.model;
 
 import jakarta.persistence.*;
+
 import java.util.List;
+
 import jakarta.validation.constraints.NotNull;
 
 
@@ -23,6 +25,24 @@ public class ToDo {
 
     @OneToMany(mappedBy = "toDo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Task> tasks;
+
+    public ToDo() {
+
+    }
+
+    public ToDo(String title, User user, List<Task> tasks) {
+        this.title = title;
+        this.user = user;
+        this.tasks = tasks;
+    }
+
+
+    public ToDo(Integer id, String title, User user, List<Task> tasks) {
+        this.id = id;
+        this.title = title;
+        this.user = user;
+        this.tasks = tasks;
+    }
 
     public Integer getId() {
         return id;

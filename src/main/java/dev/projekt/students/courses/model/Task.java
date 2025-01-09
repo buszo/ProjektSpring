@@ -29,6 +29,24 @@ public class Task {
         this.completed = completed;
     }
 
+
+    public Task() {
+    }
+
+
+    public Task(String description, boolean completed, LocalDateTime completed_time) {
+        this.description = description;
+        this.completed = completed;
+        this.completed_time = completed_time;
+    }
+
+    public Task(Integer id, String description, boolean completed, LocalDateTime completed_time) {
+        this.id = id;
+        this.description = description;
+        this.completed = completed;
+        this.completed_time = completed_time;
+    }
+
     public LocalDateTime getCompleted_time() {
         return completed_time;
     }
