@@ -8,6 +8,8 @@ import dev.projekt.students.courses.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class TaskService {
     private final TaskRepository taskRepository;
@@ -34,6 +36,20 @@ public class TaskService {
         task.setDescription(taskDTO.getDescription());
         task.setCompleted(false);
         task.setToDo(toDo);
+
+        taskRepository.save(task);
+    }
+
+    public void completeTask(TaskDTO taskDTO, User user) {
+        Task task = taskRepository.findById(taskDTO.getId())
+                .orElseThrow(() -> new RuntimeException("Task not found"));
+
+        if (!task.getToDo().getUser().equals(user)) {
+            throw new RuntimeException("User not authorized to complete this task");
+        }
+
+        task.setCompleted(taskDTO.isCompleted());
+        task.setCompleted_time(taskDTO.isCompleted() ? LocalDateTime.now() : null);
 
         taskRepository.save(task);
     }

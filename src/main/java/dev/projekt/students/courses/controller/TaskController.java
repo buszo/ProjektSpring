@@ -42,4 +42,21 @@ public class TaskController
 
         return ResponseEntity.status(201).body("Task added successfully");
     }
+
+    @PatchMapping("/{taskId}/complete")
+    public ResponseEntity<String> completeTask(
+            @PathVariable Integer taskId,
+            @RequestBody @Valid TaskDTO taskDTO) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        taskDTO.setId(taskId);
+
+        taskService.completeTask(taskDTO, user);
+
+        return ResponseEntity.ok("Task marked as completed successfully");
+    }
 }
