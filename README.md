@@ -96,3 +96,11 @@ http://localhost:8080/task/todo/{id listy todo}
     "description": "Nowy task",
 }
 ```
+
+### Wyswietlanie taska
+
+```python
+{
+http://localhost:8080/task/1
+}
+```
