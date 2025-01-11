@@ -59,4 +59,17 @@ public class TaskController
 
         return ResponseEntity.ok("Task marked as completed successfully");
     }
+
+    @GetMapping("/{taskId}")
+    public ResponseEntity<TaskDTO> getTaskById(@PathVariable Integer taskId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        TaskDTO taskDTO = taskService.getTaskById(taskId, user);
+
+        return ResponseEntity.ok(taskDTO);
+    }
 }

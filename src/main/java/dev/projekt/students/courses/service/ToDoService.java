@@ -30,7 +30,12 @@ public class ToDoService {
         return todos.stream()
                 .map(toDo -> {
                     List<TaskDTO> taskDTOs = toDo.getTasks().stream()
-                            .map(task -> new TaskDTO(task.getId(), task.getDescription(), task.isCompleted()))
+                            .map(task -> new TaskDTO(
+                                    task.getId(),
+                                    task.getDescription(),
+                                    task.isCompleted(),
+                                    task.getCompleted_time()
+                            ))
                             .collect(Collectors.toList());
 
                     return new ToDoDTO(toDo.getId(), toDo.getTitle(), taskDTOs);
@@ -47,10 +52,14 @@ public class ToDoService {
         }
 
         List<TaskDTO> taskDTOs = toDo.getTasks().stream()
-                .map(task -> new TaskDTO(task.getId(), task.getDescription(), task.isCompleted()))
+                .map(task -> new TaskDTO(
+                        task.getId(),
+                        task.getDescription(),
+                        task.isCompleted(),
+                        task.getCompleted_time() // Dodaj czas zakończenia
+                ))
                 .collect(Collectors.toList());
 
-        // Mapowanie ToDo do ToDoDTO
         return new ToDoDTO(toDo.getId(), toDo.getTitle(), taskDTOs);
     }
 

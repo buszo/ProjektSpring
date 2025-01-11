@@ -53,4 +53,20 @@ public class TaskService {
 
         taskRepository.save(task);
     }
+
+    public TaskDTO getTaskById(Integer taskId, User user) {
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new RuntimeException("Task not found"));
+
+        if (!task.getToDo().getUser().equals(user)) {
+            throw new RuntimeException("User not authorized to view this task");
+        }
+
+        return new TaskDTO(
+                task.getId(),
+                task.getDescription(),
+                task.isCompleted(),
+                task.isCompleted() ? task.getCompleted_time() : null
+        );
+    }
 }
